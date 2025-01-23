@@ -9,6 +9,8 @@ public class ZoomEffect : MonoBehaviour
     public Camera m_MainCamera;
     public Camera m_ZoomCamera;
 
+    public Transform lensObject;
+
 
     private Vector3 direction;
     void Start()
@@ -19,44 +21,32 @@ public class ZoomEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //direction = m_MainCamera.transform.eulerAngles + m_ZoomCamera.transform.eulerAngles;
-        //direction = m_MainCamera.transform.position - m_ZoomCamera.transform.position;
-        // Debug.Log(m_MainCamera.transform.position);
-        // Debug.Log(m_MainCamera.transform.rotation);
-        // Debug.Log(m_ZoomCamera.transform.position);
-        // Debug.Log(m_ZoomCamera.transform.rotation);
-        //m_ZoomCamera.transform.eulerAngles = direction;
+        
 
-        // Asetetaan suurennuskamera suoraan pääkameran suuntaan ilman suurennuslasin orientaation vaikutusta
-        // m_ZoomCamera.transform.rotation = Quaternion.LookRotation(m_MainCamera.transform.forward, Vector3.up);
-        m_ZoomCamera.transform.rotation = Quaternion.LookRotation((m_ZoomCamera.transform.position - m_MainCamera.transform.position).normalized, Vector3.up);
+        //Debug.Log(m_MainCamera.transform.position);
 
-        //m_ZoomCamera.transform.rotation = m_MainCamera.transform.rotation;
+        Vector3 direction = m_ZoomCamera.transform.position - m_MainCamera.transform.position;
 
-        // Pidä kameran sijainti suurennuslasin mukana
-        m_ZoomCamera.transform.position = transform.position;
+        m_ZoomCamera.transform.rotation = Quaternion.LookRotation(direction, transform.up);
 
+        //jos -90 < transform.position.x < 90 tai -90 < transform.position.y < 90
 
-        // Lasketaan suunta pääkamerasta suurennuslasiin
-        //Vector3 directionToLens = transform.position - m_MainCamera.transform.position;
+        // EITOIMI
+        // if (-90 < transform.rotation.x && transform.rotation.x < 90 &&
+        //     -90 < transform.rotation.y && transform.rotation.y < 90)
+        // {
+        //     lensObject.rotation = Quaternion.Euler(0, 0, 0);
+        // } else 
+        // {
+        //     lensObject.rotation = Quaternion.Euler(0, 180, 0);
+        // }
+        // EITOIMI
 
-        // Asetetaan suurennuskamera katsomaan tähän suuntaan (estetään kiertyminen)
-        //m_ZoomCamera.transform.rotation = Quaternion.LookRotation(directionToLens, Vector3.up);
+        // if (Vector3.Dot(transform.forward, direction.normalized) > 0)
+        // {
+        //     m_ZoomCamera.transform.rotation *= Quaternion.Euler(0, 180, 0);
+        // }
 
-        // Kameran tulee olla suurennuslasin kohdalla
-        // m_ZoomCamera.transform.position = transform.position;
-
-
-
-        // 1. Lasketaan suuntavektori pääkamerasta suurennuslasiin
-        //Vector3 offset = transform.position - m_MainCamera.transform.position;
-
-        // 2. Kameran näkymän tulee pysyä pääkameran katselusuunnassa
-        //m_ZoomCamera.transform.rotation = m_MainCamera.transform.rotation;
-
-        // 3. Kameran tulee olla linssin kohdalla mutta liikkua suhteessa offsettiin
-        //Vector3 zoomCameraPosition = m_MainCamera.transform.position + offset;
-        //m_ZoomCamera.transform.position = zoomCameraPosition;
         
     }
 }

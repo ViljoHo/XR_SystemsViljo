@@ -13,6 +13,8 @@ public class CustomGrab : MonoBehaviour
     public InputActionReference action;
     bool grabbing = false;
 
+    Quaternion rotationOffset = Quaternion.Euler(90, 0, 0);
+
     private void Start()
     {
         action.action.Enable();
@@ -40,7 +42,7 @@ public class CustomGrab : MonoBehaviour
                 // Change these to add the delta position and rotation instead
                 // Save the position and rotation at the end of Update function, so you can compare previous pos/rot to current here
                 grabbedObject.position = transform.position;
-                grabbedObject.rotation = transform.rotation;
+                grabbedObject.rotation = transform.rotation * rotationOffset;
             }
         }
         // If let go of button, release object
