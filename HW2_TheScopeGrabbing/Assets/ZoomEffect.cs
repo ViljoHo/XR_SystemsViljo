@@ -28,12 +28,14 @@ public class ZoomEffect : MonoBehaviour
         //m_ZoomCamera.transform.eulerAngles = direction;
 
         // Asetetaan suurennuskamera suoraan pääkameran suuntaan ilman suurennuslasin orientaation vaikutusta
-        m_ZoomCamera.transform.rotation = Quaternion.LookRotation(m_MainCamera.transform.forward, Vector3.up);
+        // m_ZoomCamera.transform.rotation = Quaternion.LookRotation(m_MainCamera.transform.forward, Vector3.up);
+        m_ZoomCamera.transform.rotation = Quaternion.LookRotation((m_ZoomCamera.transform.position - m_MainCamera.transform.position).normalized, Vector3.up);
 
         //m_ZoomCamera.transform.rotation = m_MainCamera.transform.rotation;
 
         // Pidä kameran sijainti suurennuslasin mukana
         m_ZoomCamera.transform.position = transform.position;
+
 
         // Lasketaan suunta pääkamerasta suurennuslasiin
         //Vector3 directionToLens = transform.position - m_MainCamera.transform.position;
