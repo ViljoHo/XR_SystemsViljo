@@ -13,6 +13,8 @@ public class CustomGrab : MonoBehaviour
     public InputActionReference action;
     bool grabbing = false;
 
+    
+
     Quaternion rotationOffset = Quaternion.Euler(90, 0, 0);
 
     private void Start()
@@ -22,9 +24,13 @@ public class CustomGrab : MonoBehaviour
         // Find the other hand
         foreach(CustomGrab c in transform.parent.GetComponentsInChildren<CustomGrab>())
         {
-            if (c != this)
+            if (c != this){
                 otherHand = c;
+            }
+
         }
+
+        Debug.Log("Alussa nearObjects-listan koko: " + nearObjects.Count);
     }
 
     void Update()
@@ -46,8 +52,9 @@ public class CustomGrab : MonoBehaviour
             }
         }
         // If let go of button, release object
-        else if (grabbedObject)
+        else if (grabbedObject){
             grabbedObject = null;
+        }
 
         // Should save the current position and rotation here
     }
@@ -59,19 +66,23 @@ public class CustomGrab : MonoBehaviour
         // Make sure to set the controller colliders as triggers or they will get misplaced
         // You also need to add Rigidbody to the controllers for these functions to be triggered
         // Make sure gravity is disabled though, or your controllers will (virtually) fall to the ground
-        Debug.Log("onTriggerEnter");
+        
 
         Transform t = other.transform;
         if(t && t.tag.ToLower()=="grabbable")
-            Debug.Log("lisää lähimpiin objekteihin");
+        {
             nearObjects.Add(t);
+        }
+            
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("onTriggerEXIT");
+
         Transform t = other.transform;
         if( t && t.tag.ToLower()=="grabbable")
+        {
             nearObjects.Remove(t);
+        }
     }
 }
