@@ -13,6 +13,9 @@ public class CustomGrab : MonoBehaviour
     public InputActionReference action;
     bool grabbing = false;
 
+    private Vector3 previousPos;
+    private Quaternion previousRot;
+
     
 
     Quaternion rotationOffset = Quaternion.Euler(90, 0, 0);
@@ -30,7 +33,8 @@ public class CustomGrab : MonoBehaviour
 
         }
 
-        Debug.Log("Alussa nearObjects-listan koko: " + nearObjects.Count);
+        previousPos = transform.position;
+        previousRot = transform.rotation;
     }
 
     void Update()
@@ -47,8 +51,18 @@ public class CustomGrab : MonoBehaviour
             {
                 // Change these to add the delta position and rotation instead
                 // Save the position and rotation at the end of Update function, so you can compare previous pos/rot to current here
-                grabbedObject.position = transform.position;
-                grabbedObject.rotation = transform.rotation * rotationOffset;
+                
+                //
+                Vector3 deltaPos = transform.position - previousPos;
+                Quaternion deltaRot = transform.rotation * Quaternion.Inverse(previousRot);
+
+                //Looked at the insturctions from the discord server
+                Vector3 vectorToObject = grabbedObject.position - transform.position;
+                Vector3 rotatedVector = deltaRot * vectorToObject;
+
+                grabbedObject.position = grabbedObject.position + deltaPos + rotatedVector - vectorToObject;
+                grabbedObject.rotation = deltaRot * grabbedObject.rotation;
+
             }
         }
         // If let go of button, release object
@@ -57,6 +71,9 @@ public class CustomGrab : MonoBehaviour
         }
 
         // Should save the current position and rotation here
+        previousPos = transform.position;
+        previousRot = transform.rotation;
+
     }
 
     private void OnTriggerEnter(Collider other)

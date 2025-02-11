@@ -32,15 +32,14 @@ public class PlayerMovement : MonoBehaviour
     {   
 
         Vector2 inputAxis = action.action.ReadValue<Vector2>();
-        Debug.Log("inputAxis: " + inputAxis);
 
         // Define movement based on look
         Vector3 forward = playerCamera.forward;
         Vector3 right = playerCamera.right;
 
         // Movement is only happening in x axis
-        forward.y = 0;
-        right.y = 0;
+        //forward.y = 0;
+        //right.y = 0;
         forward.Normalize();
         right.Normalize();
 
