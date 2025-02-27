@@ -99,7 +99,8 @@ public class CustomGrab : MonoBehaviour
         Transform t = other.transform;
         if( t && t.tag.ToLower()=="grabbable")
         {
-            nearObjects.Remove(t);
+            //nearObjects.Remove(t);
+            nearObjects.Clear();
         }
     }
 }
