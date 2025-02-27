@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {   
-    public GameObject holePrefab; // Reiän prefab
+    public GameObject holePrefab; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,15 +22,12 @@ public class Projectile : MonoBehaviour
         if (t && t.tag.ToLower()=="ice")
         {   
 
-
-            Debug.Log("pallo osuu jäähän");
             ContactPoint contact = collision.contacts[0];
 
             if (holePrefab != null)
             {   
-                Debug.Log("reikä prefab oikein asetettu");
-                GameObject hole = Instantiate(holePrefab, contact.point + contact.normal * 0.01f, Quaternion.LookRotation(-contact.normal));
-                hole.transform.SetParent(collision.transform); // Kiinnitetään kohdeobjektiin
+                GameObject hole = Instantiate(holePrefab, contact.point + contact.normal * 0.05f, Quaternion.LookRotation(-contact.normal));
+                hole.transform.SetParent(collision.transform); 
             }
 
             Destroy(gameObject);

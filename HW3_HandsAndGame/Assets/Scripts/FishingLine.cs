@@ -7,17 +7,17 @@ public class FishingLine : MonoBehaviour
 {
     public InputActionReference triggerInput;
     public InputActionReference secondaryButtonInput;
-    public Transform fingerTip; // Sormen pää, mistä siima lähtee
-    public float maxLength = 5f; // Siiman maksimipituus
-    public float retractSpeed = 10f; // Kuinka nopeasti siima kelautuu takaisin
-    public LineRenderer lineRenderer; // Viiva, joka esittää siimaa
+    public Transform fingerTip; 
+    public float maxLength = 5f; 
+    public float retractSpeed = 10f; 
+    public LineRenderer lineRenderer; 
     public GameObject fishingHookPrefab;
 
     private GameObject fishingHook;
 
     private Vector3 targetPosition;
-    private bool isCasting = false; // Onko siima ulkona?
-    private bool isRetracting = false; // Estetään moninkertainen kelautuminen
+    private bool isCasting = false; 
+    private bool isRetracting = false; 
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class FishingLine : MonoBehaviour
         secondaryButtonInput.action.Enable();
         
         lineRenderer.positionCount = 2;
-        lineRenderer.enabled = false; // Piilotetaan viiva alussa
+        lineRenderer.enabled = false; 
 
         targetPosition = fingerTip.position;
     }
@@ -57,7 +57,7 @@ public class FishingLine : MonoBehaviour
     {
         isCasting = true;
         isRetracting = false;
-        lineRenderer.enabled = true; // Näytetään siima
+        lineRenderer.enabled = true; 
         fishingHook = Instantiate(fishingHookPrefab, Vector3.zero, Quaternion.identity);
         targetPosition = fingerTip.position + Vector3.down * maxLength;
         
@@ -76,12 +76,12 @@ public class FishingLine : MonoBehaviour
         targetPosition = fingerTip.position;
         isCasting = false;
         isRetracting = false;
-        lineRenderer.enabled = false; // Piilotetaan siima
+        lineRenderer.enabled = false; 
 
         if (fishingHook.transform.childCount > 0)
         {
-            Transform fish = fishingHook.transform.GetChild(0); // Oletetaan, että kala on ensimmäinen lapsi
-            fish.SetParent(null); // Irrota kala, jotta se ei tuhoudu
+            Transform fish = fishingHook.transform.GetChild(0); 
+            fish.SetParent(null); 
         }
         Destroy(fishingHook);
     }

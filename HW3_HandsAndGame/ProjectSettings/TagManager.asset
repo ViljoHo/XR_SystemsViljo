@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ice
   - hole
+  - grabbable
   layers:
   - Default
   - TransparentFX

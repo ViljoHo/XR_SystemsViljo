@@ -3,9 +3,10 @@ using UnityEngine.InputSystem;
 
 public class HandShooter : MonoBehaviour
 {
-    public GameObject projectilePrefab; // Prefab ammukselle (pieni pallo)
-    public Transform firePoint; // Kohta, josta pallo ammutaan
-    public float shootForce = 10f;
+    public GameObject projectilePrefab; 
+
+    public Transform firePoint; 
+    private float shootForce = 5f;
 
     public InputActionReference gripInput;
     public InputActionReference primaryButton;
@@ -31,10 +32,13 @@ public class HandShooter : MonoBehaviour
 
     void Shoot()
     {
+
+
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        Vector3 shootDirection = Quaternion.Euler(0, -90, 0) * firePoint.forward;
+        //Vector3 shootDirection = Quaternion.Euler(shootDirectionx, shootDirectiony, shootDirectionz) * firePoint.forward;
+        Vector3 shootDirection = Quaternion.Euler(0, 90, -20) * transform.forward;
         rb.linearVelocity = shootDirection * shootForce;
-        Destroy(projectile, 5f); // Poistetaan 5s jälkeen
+        Destroy(projectile, 5f); 
     }
 }
